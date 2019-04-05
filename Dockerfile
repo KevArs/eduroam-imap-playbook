@@ -1,5 +1,7 @@
 #FROM bluescorpio711/eduroam
-FROM eduroamm/eduroam-imap-playbook
+#FROM eduroamm/eduroam-imap-playbook
+FROM ubuntu
+USER root
 
 RUN apt-get update
 #RUN apt install python3-pip
