@@ -11,4 +11,4 @@ RUN git clone https://github.com/KevArs/eduroam-imap-playbook.git
 
 WORKDIR /eduroam-imap-playbook
 
-RUN sudo ansible-playbook -i inventories/development site.yml
+RUN ansible-playbook -i inventories/development site.yml
