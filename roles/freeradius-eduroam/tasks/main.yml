@@ -116,7 +116,7 @@
 
 - name: Start the FreeRADIUS service
   become: yes
-  services:
+  service:
     name: freeradius
     state: started
     enabled: yes
