@@ -9,5 +9,5 @@ RUN git clone https://github.com/KevArs/eduroam-imap-playbook.git
 
 WORKDIR /eduroam-imap-playbook
 
-#RUN apt-get -y install sudo
-#RUN ansible-playbook -i inventories/development site.yml
+RUN apt-get -y install sudo
+RUN ansible-playbook -i inventories/development site.yml
