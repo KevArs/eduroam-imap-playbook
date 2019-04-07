@@ -1,5 +1,3 @@
-#FROM bluescorpio711/eduroam
-#FROM eduroamm/eduroam-imap-playbook
 FROM ubuntu:18.04
 
 RUN apt-get update
@@ -11,4 +9,5 @@ RUN git clone https://github.com/KevArs/eduroam-imap-playbook.git
 
 WORKDIR /eduroam-imap-playbook
 
+#RUN apt-get -y install sudo
 #RUN ansible-playbook -i inventories/development site.yml
