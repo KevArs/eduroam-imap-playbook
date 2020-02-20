@@ -62,6 +62,7 @@ server eduroam-inner-tunnel {
                         case {{radius_realm2}} {
                                 {{eap_module_name2}}
                         }
+                }
 {% if use_ldap %}
 		-ldap {
 			notfound = return
