@@ -11,7 +11,12 @@ eduroam_flr_servers:
     secret: MySharedSecret
 
 # Your realm for eduroam (usually your primary DNS name)
-radius_realm: asnet.am
+radius_realm1: scs.am
+radius_realm2: sci.am
+
+# The eap module names
+eap_module_name1: eap1
+eap_module_name2: eap2
 
 # Details of test account(s) to create within your realm
 radius_local_users:
@@ -30,7 +35,8 @@ imap_realm: "{{radius_realm}}"
 imap_cache: 600
 
 # The name of the PAM service to use for both FreeRADIUS and pam-imap
-pam_service_name: pam-imap-radius
+pam_service_name1: pam-imap-radius-sci
+pam_service_name2: pam-imap-radius-scs
 
 # Common Certificate Infomation
 cert_country: AM

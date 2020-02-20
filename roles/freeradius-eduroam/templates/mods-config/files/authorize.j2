@@ -28,7 +28,10 @@
 
 {% if use_pam %}
 # This catches all remaining users and sends them to PAM
-DEFAULT	Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name}}", Auth-Type := PAM
+#DEFAULT	Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name}}", Auth-Type := PAM
+
+DEFAULT         Realm == "{{radius_realm1}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name1}}", Auth-Type := PAM
+DEFAULT         Realm == "{{radius_realm2}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name2}}", Auth-Type := PAM
 
 {% endif %}
 # On no match, the user is denied access.
