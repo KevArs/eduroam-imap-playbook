@@ -10,19 +10,27 @@ eduroam_flr_servers:
     port: 22122
     secret: MySharedSecret
 
-# Your realm for eduroam (usually your primary DNS name)
+# Your realm(s) for eduroam (usually your primary DNS name), module name(s) for the eap configuration 
+# and the name of the PAM service to use for both FreeRADIUS and pam-imap
 radius_realm:
   - realm_name: scs.am
     eap_module_name: eap1
+    pam_imap: pam-imap-radius-scs
 
   - realm_name: sci.am
     eap_module_name: eap2
+    pam_imap: pam-imap-radius-sci
 
 
-# Details of test account(s) to create within your realm
+# Details of test account(s) to create within your realm(s) (optional)
 radius_local_users:
-  - username: test-asnet-eduroam
-    password: asnet-AM-test+2019
+  - username: test-scs-eduroam
+    password: scs-AM-test+2020
+    realm_name: scs.am
+
+  - username: test-sci-eduroam
+    password: sci-AM-test+2020
+    realm_name: sci.am
 
 # Details of your IMAP server
 imap_server: mail.asnet.am
@@ -34,10 +42,6 @@ imap_realm: "{{radius_realm}}"
 
 # How long (in seconds) to cache credentials for. Set to no to disable.
 imap_cache: 600
-
-# The name of the PAM service to use for both FreeRADIUS and pam-imap
-pam_service_name1: pam-imap-radius-sci
-pam_service_name2: pam-imap-radius-scs
 
 # Common Certificate Infomation
 cert_country: AM

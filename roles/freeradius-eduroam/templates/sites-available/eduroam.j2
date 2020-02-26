@@ -28,17 +28,17 @@ server eduroam {
                 rewrite_called_station_id
                 rewrite_calling_station_id
                 if (
-                        {%- for flr in eduroam_flr_servers -%}
-                                "%{client:shortname}" != "{{ (flr.hostname|default('unknown')).split('.')|first }}"
-                                {%- if not loop.last %} && {% endif -%}
-                        {%- endfor -%}
+                      {%- for flr in eduroam_flr_servers -%}
+                           "%{client:shortname}" != "{{ (flr.hostname|default('unknown')).split('.')|first }}"
+                           {%- if not loop.last %} && {% endif -%}
+                      {%- endfor -%}
                 ) {
                         update request {
-                                {% for r in radius_realm %}
-                                &Operator-Name := "1{{r.realm_name|default("example.ac.za")}}"
-                                # the literal number "1" above is an important prefix! Do not change it!
-                                &Eduroam-SP-Country := "{{r.realm_name.split('.')|last|upper|default("UNKNOWN")}}"
-                                {% endfor %}
+                             {% for r in radius_realm %}
+                             &Operator-Name := "1{{r.realm_name|default("example.ac.za")}}"
+                             # the literal number "1" above is an important prefix! Do not change it!
+                             &Eduroam-SP-Country := "{{r.realm_name.split('.')|last|upper|default("UNKNOWN")}}"
+                             {% endfor %}
                         }
                 }
                 cui
@@ -47,9 +47,9 @@ server eduroam {
                 suffix
                 switch &Realm {
                 {% for r1 in radius_realm %}
-                        case {{r1.realm_name}} {
-                               {{r1.eap_module_name}}
-                        }
+                     case {{r1.realm_name}} {
+                           {{r1.eap_module_name}}
+                     }
                 {% endfor %}
                 }
         }
@@ -83,9 +83,9 @@ server eduroam {
                         f_ticks
                         attr_filter.access_reject
 #                        linelog_elk
-                       {% for eap_modules in radius_realm %}
-                       {{eap_modules.eap_module_name}}
-                       {% endfor %}
+                    {% for eap_modules in radius_realm %}
+                    {{eap_modules.eap_module_name}}
+                    {% endfor %}
                         remove_reply_message_if_eap
                 }
         }

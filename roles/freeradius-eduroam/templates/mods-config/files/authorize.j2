@@ -5,33 +5,46 @@
 ##
 
 {% if use_pam or use_ldap %}
+
 # You can include local (non-{{ "PAM" if use_pam else "LDAP"}}) users like this:
 
 # icecold	Realm == "{{radius_realm}}", Cleartext-Password := "snowwhite"
 
 # otheruser	Realm == "{{radius_realm}}", Cleartext-Password := "swordfish", Expiration := "25 May 2099"
+
 {% else %}
+
 # You can include local users like this:
 
 # icecold@{{radius_realm}}	Cleartext-Password := "snowwhite"
 
 # otheruser@{{radius_realm}}	Cleartext-Password := "swordfish", Expiration := "25 May 2099"
+
 {% endif %}
+
 {% for u in radius_local_users %}
 
 {% if use_pam or use_ldap %}
-{{u.username|default("nren_radius_test")}}	Realm == "{{radius_realm}}", Cleartext-Password := "{{u.password|default("PleaseChangeThisPassword")}}"
+
+{{u.username|default("nren_radius_test")}}      Realm == "{{u.realm_name}}", Cleartext-Password := "{{u.password|default("PleaseChangeThisPassword")}}"
+
 {% else %}
-{{u.username|default("nren_radius_test")}}@{{radius_realm}}	Cleartext-Password := "{{u.password|default("PleaseChangeThisPassword")}}"
+
+{{u.username|default("nren_radius_test")}}@{{u.realm_name}}     Cleartext-Password := "{{u.password|default("PleaseChangeThisPassword")}}"
+
 {% endif %}
+
 {% endfor %}
+
 
 {% if use_pam %}
 # This catches all remaining users and sends them to PAM
 #DEFAULT	Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name}}", Auth-Type := PAM
 
 {% for radius_realm in radius_realm %}
-DEFAULT         Realm == "{{radius_realm.realm_name}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name1}}", Auth-Type := PAM
+
+DEFAULT         Realm == "{{radius_realm.realm_name}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{radius_realm.pam_imap}}", Auth-Type := PAM
+
 {% endfor %}
 
 {% endif %}
