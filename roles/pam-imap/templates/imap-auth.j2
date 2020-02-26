@@ -1,9 +1,13 @@
-#
-# /etc/pam.d/{{pam_service_name}} - PAM configuration for pam_imap/FreeRADIUS
-#
+##
+## PAM configuration for pam_imap/FreeRADIUS
+##
 
 # Do authentication against an IMAP server
-auth required pam_imap.so conf=/etc/security/pam_imap.conf
+#auth required pam_imap.so conf=/etc/security/pam_imap.conf
+
+{% for pam_imap in radius_realm %}
+auth required pam_imap.so conf=/etc/security/{{pam_imap.pam_imap}}.conf
+{% endfor %}
 
 # FreeRADIUS's authenticate section calls pam_acct_mgmt()
 account required pam_permit.so

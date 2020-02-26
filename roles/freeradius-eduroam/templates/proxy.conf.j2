@@ -72,11 +72,13 @@ realm LOCAL {
 }
 realm NULL {
 }
-realm {{radius_realm}} {
+{% for eap_module in radius_realm %}
+realm {{eap_module.realm_name}} {
 }
 # this catches subdomains
-realm "~.+\\.{{radius_realm|replace('.','\\\\.')}}$" {
+realm "~.+\\.{{eap_module.realm_name|replace('.','\\\\.')}}$" {
 }
+{% endfor %}
 
 # blackhole routing - EAP-SIM/MNOs
 realm "~\\.3gppnetwork\\.org$" {

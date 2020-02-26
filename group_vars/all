@@ -33,15 +33,18 @@ radius_local_users:
     realm_name: sci.am
 
 # Details of your IMAP server
-imap_server: mail.asnet.am
-imap_port: 993
-imap_ssl: yes
+imap:
+  - imap_server: mail.scs.am
+    imap_port: 993
+    imap_ssl: yes
+    imap_cache: 600
+    imap_realm: scs.am
 
-# If your IMAP server requires a realm/domain for login (default to same as RADIUS)
-imap_realm: "{{radius_realm}}"
-
-# How long (in seconds) to cache credentials for. Set to no to disable.
-imap_cache: 600
+  - imap_server: mail.sci.am
+    imap_port: 993
+    imap_ssl: yes
+    imap_cache: 600
+    imap_realm: sci.am
 
 # Common Certificate Infomation
 cert_country: AM
