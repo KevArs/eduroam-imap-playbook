@@ -56,13 +56,21 @@ server eduroam-inner-tunnel {
 			&Proxy-To-Realm := LOCAL
 		}
                 switch &Realm {
-                        case {{radius_realm1}} {
-                                {{eap_module_name1}}
+                {% for r in radius_realm %}
+                        case {{r.realm_name}} {
+                                 {{r.eap_module_name}}
                         }
-                        case {{radius_realm2}} {
-                                {{eap_module_name2}}
-                        }
+                {% endfor %}
                 }
+#                switch &Realm {
+#                        case {{radius_realm}} {
+#                                 eap1
+#                                {{eap_module_name}}
+#                        }
+#                        case {{radius_realm2}} {
+#                                {{eap_module_name2}}
+#                        }
+#                }
 {% if use_ldap %}
 		-ldap {
 			notfound = return
@@ -100,8 +108,12 @@ server eduroam-inner-tunnel {
 {% endif %}
 
 		#  Custom EAP Modules
-		{{eap_module_name1}}
-                {{eap_module_name2}}
+            {% for eap_module in radius_realm %}
+                {{eap_module.eap_module_name}}
+            {% endfor %}
+#                eap1
+#		{{eap_module_name}}
+#                {{eap_module_name2}}
 	}
 
 	#  Session database, used for checking Simultaneous-Use. Either the radutmp

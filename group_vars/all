@@ -11,12 +11,18 @@ eduroam_flr_servers:
     secret: MySharedSecret
 
 # Your realm for eduroam (usually your primary DNS name)
-radius_realm1: scs.am
-radius_realm2: sci.am
+radius_realm:
+  - realm_name: scs.am
+    eap_module_name: eap1
+
+  - realm_name: sci.am
+    eap_module_name: eap2
+
+#radius_realm2: sci.am
 
 # The eap module names
-eap_module_name1: eap1
-eap_module_name2: eap2
+#eap_module_name: [eap1, eap2]
+#eap_module_name2: eap2
 
 # Details of test account(s) to create within your realm
 radius_local_users:

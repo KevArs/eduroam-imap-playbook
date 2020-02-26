@@ -63,18 +63,31 @@ server eduroam {
 		auth_log
 		suffix
                 switch &Realm {
-                        case {{radius_realm1}} {
-                                {{eap_module_name1}}
+                {% for r in radius_realm %}
+                        case {{r.realm_name}} {
+                               {{r.eap_module_name}}
                         }
-                        case {{radius_realm2}} {
-                                {{eap_module_name2}}
-                        }
+                {% endfor %}
                 }
+#                switch &Realm {
+#                        case {{radius_realm}} {
+#                                 eap1
+#                                {{eap_module_name}}
+#                        }
+#                        case {{radius_realm2}} {
+#                                {{eap_module_name2}}
+#                        }
+#                }
 	}
 
 	authenticate {
-		{{eap_module_name1}}
-                {{eap_module_name2}}
+            {% for eap_module in radius_realm %}
+                {{eap_module.eap_module_name}}
+            {% endfor %}
+
+#                eap1
+#		{{eap_module_name}}
+#                {{eap_module_name2}}
 	}
 
 	preacct {
@@ -100,8 +113,11 @@ server eduroam {
 			f_ticks
 			attr_filter.access_reject
 #                        linelog_elk
-			{{eap_module_name1}}
-                        {{eap_module_name2}}
+            {% for eap_modules in radius_realm %}
+                        {{eap_modules.eap_module_name}}
+            {% endfor %}                        
+#			{{eap_module_name}}
+#                       {{eap_module_name2}}
 			remove_reply_message_if_eap
 		}
 	}
@@ -119,7 +135,10 @@ server eduroam {
 		# if you want detailed logging
 		post_proxy_log
 		attr_filter.post-proxy
-		{{eap_module_name1}}
-                {{eap_module_name2}}
+            {% for eap_module1 in radius_realm %}
+                {{eap_module1.eap_module_name}}
+            {% endfor %}
+#		{{eap_module_name}}
+#                {{eap_module_name2}}
 	}
 }
