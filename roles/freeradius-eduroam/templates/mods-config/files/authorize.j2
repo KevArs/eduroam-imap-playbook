@@ -30,8 +30,10 @@
 # This catches all remaining users and sends them to PAM
 #DEFAULT	Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name}}", Auth-Type := PAM
 
-DEFAULT         Realm == "{{radius_realm1}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name1}}", Auth-Type := PAM
-DEFAULT         Realm == "{{radius_realm2}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name2}}", Auth-Type := PAM
+{% for radius_realm in radius_realm %}
+DEFAULT         Realm == "{{radius_realm.realm_name}}", Virtual-Server == eduroam-inner-tunnel, Pam-Auth := "{{pam_service_name1}}", Auth-Type := PAM
+{% endfor %}
 
 {% endif %}
 # On no match, the user is denied access.
+

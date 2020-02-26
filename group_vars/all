@@ -18,11 +18,6 @@ radius_realm:
   - realm_name: sci.am
     eap_module_name: eap2
 
-#radius_realm2: sci.am
-
-# The eap module names
-#eap_module_name: [eap1, eap2]
-#eap_module_name2: eap2
 
 # Details of test account(s) to create within your realm
 radius_local_users:
