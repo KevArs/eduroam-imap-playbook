@@ -1,6 +1,7 @@
 # -*- text -*-
 #
 
+#
 #  The "linelog" module will log one line of text to a file.
 #  Both the filename and the line of text are dynamically expanded.
 #
@@ -14,6 +15,7 @@ linelog {
         #  If the filename is "syslog", then the log messages will
         #  go to syslog.
         filename = ${logdir}/linelog
+#       filename = /var/log/freeradius/linelog
 
         #
         #  Most file systems can handly nearly the full range of UTF-8
@@ -106,10 +108,10 @@ linelog {
         #
         #  This is for "linelog" being used in the post-auth section
         #  If you want to use it in "authorize", you need to change
-        #  the reference to "messages.%{%{Packet-Type}:-default}",
+        #  the reference to "messages.%{\%{Packet-Type}:-default}",
         #  and then add the appropriate messages.
         #
-        reference = "messages.%{%{reply:Packet-Type}:-default}"
+        reference = "messages.%{\%{reply:Packet-Type}:-default}"
 
         #
         #  The messages defined here are taken from the "reference"
@@ -137,7 +139,7 @@ linelog log_accounting {
 
         permissions = 0600
 
-        reference = "Accounting-Request.%{%{Acct-Status-Type}:-unknown}"
+        reference = "Accounting-Request.%{\%{Acct-Status-Type}:-unknown}"
 
         #
         #  Another example:
@@ -150,18 +152,19 @@ linelog log_accounting {
                 #  Don't log anything for these packets.
                 Alive = ""
 
-                Accounting-On = "NAS %{%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) just came online"
-                Accounting-Off = "NAS %{%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) just went offline"
+                Accounting-On = "NAS %{\%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{\%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) just came online"
+                Accounting-Off = "NAS %{\%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{\%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) just went offline"
 
                 # don't log anything for other Acct-Status-Types.
-                unknown = "NAS %{%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) sent unknown Acct-Status-Type %{Acct-Status-Type}"
+                unknown = "NAS %{\%{Packet-Src-IP-Address}:-%{Packet-Src-IPv6-Address}} (%{\%{NAS-IP-Address}:-%{NAS-IPv6-Address}}) sent unknown Acct-Status-Type %{Acct-Status-Type}"
         }
 }
 
 linelog linelog_elk {
         filename = /var/log/freeradius/linelog
         format = ""
-        reference = "%{%{reply:Packet-Type}:-format}"
+        reference = "%{\%{reply:Packet-Type}:-format}"
         Access-Accept = "\"%S\",\"%{reply:Packet-Type}\",\"%{reply:Chargeable-User-Identity}\",\"%{Operator-Name}\",\"%{Packet-Src-IP-Address}\",\"%{NAS-IP-Address}\",\"%{Client-Shortname}\",\"%{User-Name}\""
         Access-Reject = "\"%S\",\"%{reply:Packet-Type}\",\"%{reply:Chargeable-User-Identity}\",\"%{Operator-Name}\",\"%{Packet-Src-IP-Address}\",\"%{NAS-IP-Address}\",\"%{Client-Shortname}\",\"%{User-Name}\""
+
 }
