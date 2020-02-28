@@ -97,6 +97,16 @@
     - restart freeradius
   tags: [ freeradius, freeradius-config, eduroam-sp ]
 
+- name: Add eduroam radiusd configurations
+  become: yes
+  template:
+    src: radiusd.conf.j2
+    dest: /etc/freeradius/3.0/radiusd.conf
+    mode: 0644
+  notify:
+    - restart freeradius
+  tags: [ freeradius, freeradius-config, eduroam-sp ]
+
 - name: Add fticks module
   become: yes
   template:
