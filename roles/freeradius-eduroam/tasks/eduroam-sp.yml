@@ -126,3 +126,24 @@
   notify:
     - restart freeradius
   tags: [ freeradius, freeradius-config, eduroam-sp ]
+
+- name: Add linelog module
+  become: yes
+  template:
+    src: mods-available/linelog.j2
+    dest: /etc/freeradius/3.0/mods-available/linelog
+    mode: 0644
+  notify:
+    - restart freeradius
+  tags: [ freeradius, freeradius-config, eduroam-sp ]
+
+- name: Enable the fticks module
+  become: yes
+  file:
+    state: link
+    src: /etc/freeradius/3.0/mods-available/linelog
+    path: /etc/freeradius/3.0/mods-enabled/linelog
+  notify:
+    - restart freeradius
+  tags: [ freeradius, freeradius-config, eduroam-sp ]
+
