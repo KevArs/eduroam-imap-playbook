@@ -137,7 +137,7 @@
     - restart freeradius
   tags: [ freeradius, freeradius-config, eduroam-sp ]
 
-- name: Enable the fticks module
+- name: Enable the linelog module
   become: yes
   file:
     state: link
