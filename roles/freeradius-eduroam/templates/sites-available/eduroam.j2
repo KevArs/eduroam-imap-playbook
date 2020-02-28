@@ -76,13 +76,13 @@ server eduroam {
                 # if you want detailed logging
                 reply_log
                 f_ticks
-#                linelog_elk
+                linelog_elk
                 remove_reply_message_if_eap
                 Post-Auth-Type REJECT {
                         reply_log
                         f_ticks
                         attr_filter.access_reject
-#                        linelog_elk
+                        linelog_elk
                     {% for eap_modules in radius_realm %}
                     {{eap_modules.eap_module_name}}
                     {% endfor %}
